@@ -1,0 +1,53 @@
+# 位运算，需判断负数
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums_length = len(nums)
+        bitsum = [0 for _ in range(32)]
+        for i in range(nums_length):
+            temp = 1
+            for j in range(31,-1,-1):
+                bit = nums[i]&temp
+                if bit != 0:
+                    bitsum[j] += 1
+                temp = temp << 1
+        res = 0
+        for i in range(32):
+            res = res << 1
+            res += bitsum[i]%3
+        return res-0x100000000 if res>0x7fffffff else res
+#电路 思路很妙
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        a, b = 0, 0
+        for num in nums:
+            b = ~a & (b ^ num)
+            a = ~b & (a ^ num)
+        return b
+ # 简单想法
+ class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return (sum(set(nums))*3-sum(nums))//2
+ # 哈希表
+ class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dict = {}
+        for i in nums:
+            if i in dict:
+                dict[i] += 1
+            else:
+                dict[i] = 1
+        for j in dict:
+            if dict[j] == 1:
+                return j
