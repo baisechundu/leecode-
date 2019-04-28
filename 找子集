@@ -1,0 +1,33 @@
+#给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        length = len(nums)
+        hash = 1
+        sub_size = pow(2,length) 
+        while hash < sub_size:
+            temp = []
+            for i in range(length):
+                a = 1 << i
+                if a & hash:
+                    temp.append(nums[i])
+            res.append(temp)
+            hash += 1
+        return res
+        
+#方法二 回溯
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = [[]]
+        self.helper(res, nums, [])
+        return res
+
+    def helper(self,res, nums, re):
+        for i in range(0,len(nums)):
+            sub = re + [nums[i]]
+            res.append(sub)
+            self.helper(res, nums[i + 1:], sub)
