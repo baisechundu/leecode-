@@ -1,0 +1,22 @@
+#递归实现
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def convertBST(self, root: TreeNode) -> TreeNode:
+        al=[0]
+        self.bianli(root,al)
+        return root
+    
+    def bianli(self, root, addlist):
+        if not root :
+            return 
+        self.bianli(root.right,addlist)
+        addlist.append(root.val)
+        root.val+=sum(addlist[:-1])
+        self.bianli(root.left,addlist)
+#非递归实现
