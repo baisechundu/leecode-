@@ -20,3 +20,25 @@ class Solution:
         root.val+=sum(addlist[:-1])
         self.bianli(root.left,addlist)
 #非递归实现
+class Solution(object):
+    def convertBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return root
+        prenum = 0
+        result, stack, position = [], [], root
+        while position or stack:
+            while position:
+                stack.append(position)
+                position = position.right
+            position = stack.pop()           
+            position.val += prenum
+            prenum = position.val
+            if position.left != None:
+                position = position.left
+            else:
+                position = None
+        return root
